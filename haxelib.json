@@ -1,0 +1,12 @@
+{
+    "name": "creatures-genetics-toolbox",
+    "url" : "https://github.com/crazyjul/creatures-genetics-toolbox",
+    "license": "MIT",
+    "tags": ["creatures"],
+    "description": "This library allows reading and modifying of Creatures 3/DS/Exodus genome files..",
+    "version": "0.1.0",
+    "classPath": "src/",
+    "releasenote": "Initial release",
+    "contributors": ["crazyjul"],
+    "dependencies": {}
+  }

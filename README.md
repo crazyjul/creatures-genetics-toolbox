@@ -5,19 +5,19 @@ This haxe library allows reading and modifying of Creatures 3/DS/Exodus genome f
 
 ## Genome support
 
-After loading a genome, you can access to all genes. Genes are just container that point to the original byte array.
+After loading a genome, you can access all the recognized genes. Genes are just container that point to the original byte array.
 
 For the moment, the system is read-only and does not support modifications.
 
-###Usage
+### Usage
 
 ```
 import creatures.Genome;
 
 
-var genome = new Genome( file_content );
+var genome = new Genome(file_content);
 
-for( gene in genome.gene) {
+for(gene in genome.gene) {
     trace(gene.id);
 }
 
