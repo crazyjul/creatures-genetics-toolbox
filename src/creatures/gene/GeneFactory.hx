@@ -17,6 +17,12 @@ class GeneFactory {
         var subtype =  bytes.get(offset + 5);
 
         switch([type, subtype]) {
+            case [GeneType.Brain, BrainType.Lobe] : return new LobeGene(bytes, offset);
+
+            case [GeneType.Brain, BrainType.BrainOrgan] : return new BrainOrganGene(bytes, offset);
+
+            case [GeneType.Brain, BrainType.Tract] : return new TractGene(bytes, offset);
+
             case [GeneType.Brain, _] : return new BrainGene(bytes, offset);
 
             case [GeneType.Biochemistry, BiochemistryType.Receptor] : return new ReceptorGene(bytes, offset);
