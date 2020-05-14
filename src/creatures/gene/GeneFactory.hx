@@ -39,6 +39,18 @@ class GeneFactory {
 
             case [GeneType.Creature, CreatureType.Appearance] : return new AppearanceGene(bytes, offset);
 
+            case [GeneType.Creature, CreatureType.Pose] : return new PoseGene(bytes, offset);
+
+            case [GeneType.Creature, CreatureType.Gait] : return new GaitGene(bytes, offset);
+
+            case [GeneType.Creature, CreatureType.Instinct] : return new InstinctGene(bytes, offset);
+
+            case [GeneType.Creature, CreatureType.Pigment] : return new PigmentGene(bytes, offset);
+
+            case [GeneType.Creature, CreatureType.Pigmentbleed] : return new PigmentbleedGene(bytes, offset);
+
+            case [GeneType.Creature, CreatureType.Expression] : return new ExpressionGene(bytes, offset);
+
             case [GeneType.Creature, _] : return new CreatureGene(bytes, offset);
 
             case [GeneType.Organ, _] : return new OrganGene(bytes, offset);
