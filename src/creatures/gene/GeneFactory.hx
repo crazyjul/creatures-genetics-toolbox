@@ -21,6 +21,16 @@ class GeneFactory {
 
             case [GeneType.Biochemistry, BiochemistryType.Receptor] : return new ReceptorGene(bytes, offset);
 
+            case [GeneType.Biochemistry, BiochemistryType.Emitter] : return new EmitterGene(bytes, offset);
+
+            case [GeneType.Biochemistry, BiochemistryType.Reaction] : return new ReactionGene(bytes, offset);
+
+            case [GeneType.Biochemistry, BiochemistryType.HalfLife] : return new HalfLifeGene(bytes, offset);
+
+            case [GeneType.Biochemistry, BiochemistryType.Inject] : return new InjectGene(bytes, offset);
+
+            case [GeneType.Biochemistry, BiochemistryType.NeuroEmitter] : return new NeuroEmitterGene(bytes, offset);
+
             case [GeneType.Biochemistry, _] : return new BiochemistryGene(bytes, offset);
 
             case [GeneType.Creature, CreatureType.Stimulus] : return new StimulusGene(bytes, offset);

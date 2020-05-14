@@ -3,13 +3,13 @@ package creatures.gene;
 import haxe.io.Bytes;
 
 
-class AppearanceGene extends CreatureGene {
+class InjectGene extends BiochemistryGene {
 
     public function new(bytes : Bytes, offset : Int) {
         super(bytes, offset);
     }
 
     override function getName() : String {
-        return 'Appearance Gene';
+        return 'Inject Emitter Gene';
     }
 }
