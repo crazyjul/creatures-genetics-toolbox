@@ -1,8 +1,8 @@
 package creatures.gene;
 
 
-enum SexActivation {
-    Both;
-    Female;
-    Male;
+@:enum abstract SexActivation(String) {
+    var Both = "Both";
+    var Female = "Female";
+    var Male = "Male";
 }

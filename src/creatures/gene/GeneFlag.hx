@@ -1,7 +1,7 @@
 package creatures.gene;
 
 enum GeneFlag {
-    Allowed;
+    CanBeMutated;
     CanBeDuplicated;
     CanBeCut;
     ExpressInMale;

@@ -53,7 +53,6 @@ class Gene {
 
     function get_id() : Int {
         return getByte(IdOffset);
-
     }
 
     function get_generation() : Int {
@@ -91,6 +90,15 @@ class Gene {
         return getByte(VariantOffset);
     }
 
+    function get_mutability() : Int {
+        return getByte(MutabilityOffet);
+    }
+
+    function set_mutability(value: Int) : Int {
+        //setByte(value, MutabilityOffet);
+        return value;
+    }
+
     function getName() :String {
         return "Unknown gene ( " + type + ")";
     }
@@ -114,6 +122,32 @@ class Gene {
         } else {
             return Female;
         }
+    }
+
+    function set_sex(value : SexActivation) {
+        return value;
+    }
+
+
+    public function addFlag(value : GeneFlag) : Void {
+        if(flags.indexOf(CanBeMutated) == -1) {
+            flags.push(CanBeMutated);
+        }
+    }
+
+    public function removeFlag(value : GeneFlag) : Void {
+        if(flags.indexOf(CanBeMutated) != -1) {
+            flags.remove(CanBeMutated);
+        }
+    }
+
+    public function hasFlag(value : GeneFlag) : Bool {
+        return flags.indexOf(value) != -1;
+    }
+
+    public function get_annotation() : String {
+        //:TODO: Support annotation files
+        return "<no annotation>";
     }
 
 }

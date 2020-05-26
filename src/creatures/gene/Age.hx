@@ -1,12 +1,13 @@
 package creatures.gene;
 
 
-enum Age {
-    Embryo;
-    Child;
-    Adolescent;
-    Youth;
-    Adult;
-    Old;
-    Senile;
+@:enum
+abstract Age(String) {
+    var Embryo = "Embryo";
+    var Child = "Child";
+    var Adolescent = "Adolescent";
+    var Youth = "Youth";
+    var Adult = "Adult";
+    var Old = "Old";
+    var Senile = "Senile";
 }
