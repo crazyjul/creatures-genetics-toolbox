@@ -3,6 +3,7 @@ package creatures.gene;
 import haxe.io.Bytes;
 
 
+@:build(JsProp.all())
 class ReceptorGene extends BiochemistryGene {
 
     var organId(get, never) : Int;
@@ -61,5 +62,9 @@ class ReceptorGene extends BiochemistryGene {
 
     function get_effect() : Int {
         return getByte(EffectOffset);
+    }
+
+    override function getTypename() {
+        return "Receptor";
     }
 }

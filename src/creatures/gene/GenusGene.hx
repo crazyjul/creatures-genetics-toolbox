@@ -2,7 +2,7 @@ package creatures.gene;
 
 import haxe.io.Bytes;
 
-
+@:build(JsProp.all())
 class GenusGene extends CreatureGene {
 
     public var genus(get, never) : Int;
@@ -57,5 +57,9 @@ class GenusGene extends CreatureGene {
         }
 
         return _bytes.getString(start, i);
+    }
+
+    override function getTypename() {
+        return "Genus";
     }
 }

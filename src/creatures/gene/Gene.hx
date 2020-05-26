@@ -25,6 +25,7 @@ class Gene {
 
     public static inline var FirstGeneByte = 12;
 
+    public var typename(get, never):String;
     public var type(get, never) : Int;
     public var subtype(get, never) : Int;
     public var id(get, never) : Int;
@@ -32,11 +33,22 @@ class Gene {
     public var age(get, never) : Age;
     public var flags(get, never): Array<GeneFlag>;
     public var variant(get, never): Int;
-    public var sex(get, never) : SexActivation;
+    public var sex(get, set) : SexActivation;
+    public var mutability(get, set) : Int;
+
+    public var annotation(get, never) : String;
 
     public function new(bytes :  Bytes, offset : Int) {
         _bytes = bytes;
         _offset = offset;
+    }
+
+    public function get_typename():String {
+        return getTypename();
+    }
+
+    function getTypename() : String {
+        return null;
     }
 
     function get_type() : Int {

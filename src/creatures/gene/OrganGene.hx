@@ -2,7 +2,7 @@ package creatures.gene;
 
 import haxe.io.Bytes;
 
-
+@:build(JsProp.all())
 class OrganGene extends Gene {
 
     public var clockRate(get, never) : Float;
@@ -72,7 +72,7 @@ class OrganGene extends Gene {
         return getByte(ZeroEnergyDamageOffset);
     }
 
-    override function getTypename() : String{
+    override function getTypename() : String {
         return "Organ";
     }
 }
