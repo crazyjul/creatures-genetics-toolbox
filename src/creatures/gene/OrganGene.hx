@@ -11,6 +11,12 @@ class OrganGene extends Gene {
     public var initClock(get, never) : Float;
     public var zeroEnergyDamage(get, never) : Float;
 
+    public var clockRateAsByte(get, never) : Float;
+    public var repairRateAsByte(get, never) : Float;
+    public var lifeForceAsByte(get, never) : Float;
+    public var initClockAsByte(get, never) : Float;
+    public var zeroEnergyDamageAsByte(get, never) : Float;
+
 
     static inline var ClockRateOffset = Gene.FirstGeneByte;
     static inline var RepairRateOffset = Gene.FirstGeneByte + 1;
@@ -44,5 +50,29 @@ class OrganGene extends Gene {
 
     public function get_zeroEnergyDamage() : Float {
         return getFloat(ZeroEnergyDamageOffset);
+    }
+
+    public function get_clockRateAsByte() : Int {
+        return getByte(ClockRateOffset);
+    }
+
+    public function get_repairRateAsByte() : Int {
+        return getByte(RepairRateOffset);
+    }
+
+    public function get_lifeForceAsByte() : Int {
+        return getByte(LifeForceOffset);
+    }
+
+    public function get_initClockAsByte() : Int {
+        return getByte(InitClockOffset);
+    }
+
+    public function get_zeroEnergyDamageAsByte() : Int {
+        return getByte(ZeroEnergyDamageOffset);
+    }
+
+    override function getTypename() : String{
+        return "Organ";
     }
 }
