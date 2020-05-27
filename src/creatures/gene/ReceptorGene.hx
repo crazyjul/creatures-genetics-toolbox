@@ -29,7 +29,7 @@ class ReceptorGene extends BiochemistryGene {
     }
 
     override function getName() : String {
-        return 'Receptor Gene (${organId}, ${tissueId}, ${locusId}, ${chemical})';
+        return 'Receptor Gene';
     }
 
     function get_organId() : Int {

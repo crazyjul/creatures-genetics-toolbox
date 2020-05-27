@@ -123,6 +123,26 @@ class Gene {
         return _bytes.get(_offset + local_offset) / 255;
     }
 
+    function getSignedFloat(local_offset : Int) : Float {
+        return (getCodon(local_offset, 0, 248) / 124.0) - 1.0;
+    }
+
+    function getByteWithInvalid(local_offset : Int) : Int {
+        var value = getCodon(local_offset, 0, 255);
+        return value == 255 ? -1 : value;
+    }
+
+    function getCodon(local_offset : Int, min : Int, max: Int) : Int {
+
+        var value = getByte(local_offset);
+
+        if(min <= value && value <= max) {
+            return value;
+        }
+
+        return value % (max - min + 1) + min;
+    }
+
     function get_sex() : SexActivation {
         var sex = getByte(FlagsOffset);
         sex &= MaleFlag | FemaleFlag;
