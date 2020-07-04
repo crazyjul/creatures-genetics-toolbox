@@ -36,8 +36,6 @@ class Gene {
     public var sex(get, set) : SexActivation;
     public var mutability(get, set) : Int;
 
-    public var annotation(get, never) : String;
-
     public function new(bytes :  Bytes, offset : Int) {
         _bytes = bytes;
         _offset = offset;
@@ -176,10 +174,4 @@ class Gene {
     public function hasFlag(value : GeneFlag) : Bool {
         return flags.indexOf(value) != -1;
     }
-
-    public function get_annotation() : String {
-        //:TODO: Support annotation files
-        return "<no annotation>";
-    }
-
 }
