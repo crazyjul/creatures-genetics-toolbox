@@ -23,6 +23,10 @@ typedef Note = {
     var annotation : String;
 }
 
+enum GeneId {
+    Gene( type : Int, subtype : Int, uniqueId : Int );
+}
+
 
 class GenomeNotes {
     static inline var messageSVRuleCount = 16;
@@ -33,7 +37,7 @@ class GenomeNotes {
 
     private var _svNotes : Array<SVNote> = [];
     private var _notes : Array<Note> = [];
-    private var _noteMap : Map<Int, Note> = new Map();
+    private var _noteMap : Map<GeneId, Note> = new Map();
     private var _notesCount : Int;
     private var _svnotesCount: Int;
 
@@ -99,7 +103,7 @@ class GenomeNotes {
             note.caption = readString();
             note.annotation = readString();
             _notes.push(note);
-            _noteMap[note.uniqueId] = note;
+            _noteMap[Gene(note.geneType, note.geneSubtype, note.uniqueId)] = note;
         }
         _svnotesCount = readVariant();
 
@@ -115,10 +119,11 @@ class GenomeNotes {
     }
 
 
-    public function getDescription(id : Int) : String {
+    public function getDescription(type : Int, subtype : Int, unique_id : Int) : String {
 
-        if(_noteMap.exists(id)) {
-            return _noteMap[id].caption;
+        var gene = Gene(type, subtype, unique_id);
+        if(_noteMap.exists(gene)) {
+            return _noteMap[gene].caption;
         }
 
         return "";
