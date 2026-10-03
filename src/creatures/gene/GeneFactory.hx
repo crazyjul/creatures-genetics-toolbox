@@ -7,9 +7,7 @@ class GeneFactory {
 
     public static function create(bytes : Bytes, offset : Int) : Gene {
 
-        var header = bytes.getString(offset, 4);
-
-        if(header != Constants.GeneHeader) {
+        if(!creatures.Genome.hasMarker(bytes, offset, Constants.GeneHeader)) {
             return null;
         }
 

@@ -18,10 +18,23 @@ class Genome {
         parse();
     }
 
-    public function isValid() : Bool {
-        var header = _bytes.getString(0, 4);
+    /** Compares raw bytes with an ASCII marker; getString would try to decode binary data as UTF-8. */
+    public static function hasMarker(bytes : Bytes, offset : Int, marker : String) : Bool {
+        if(offset < 0 || offset + marker.length > bytes.length) {
+            return false;
+        }
 
-        return header == Constants.GenomeHeader;
+        for(i in 0...marker.length) {
+            if(bytes.get(offset + i) != marker.charCodeAt(i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function isValid() : Bool {
+        return hasMarker(_bytes, 0, Constants.GenomeHeader);
     }
 
     function parse() {
@@ -48,7 +61,7 @@ class Genome {
         var range = {start : null, end : null};
 
         while((i + 3) < _bytes.length) {
-            if(_bytes.getString(i, 4) == Constants.GeneHeader) {
+            if(hasMarker(_bytes, i, Constants.GeneHeader)) {
                 range.start = i;
                 break;
             }
@@ -56,19 +69,21 @@ class Genome {
             ++i;
         }
 
-        i += 4;
+        if(range.start == null) {
+            return null;
+        }
 
-        while((i +3) < _bytes.length) {
-            if(_bytes.getString(i, 4) == Constants.GeneHeader) {
+        // A gene ends at the next gene, at the genome footer, or at the end of the data.
+        i = range.start + 4;
+        range.end = _bytes.length - 1;
+
+        while((i + 3) < _bytes.length) {
+            if(hasMarker(_bytes, i, Constants.GeneHeader) || hasMarker(_bytes, i, Constants.GenomeFooter)) {
                 range.end = i - 1;
                 break;
             }
 
             ++i;
-        }
-
-        if(range.start == null || (range.end == null && i != _bytes.length)) {
-            return null;
         }
 
         return range;

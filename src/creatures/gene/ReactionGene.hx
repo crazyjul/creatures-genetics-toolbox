@@ -34,7 +34,7 @@ class ReactionGene extends BiochemistryGene {
     }
 
     override function getTypename() {
-        return  "Emitter";
+        return "Reaction";
     }
 
     public function get_organ():Int {
