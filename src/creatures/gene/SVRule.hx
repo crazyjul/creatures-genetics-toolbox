@@ -25,7 +25,7 @@ class SVRule {
         "nominal threshold", "leakage rate", "rest state", "input gain", "persistence", "signal noise",
         "winner takes all", "set ST to LT rate", "set LT to ST rate and converge", "store |acc| into",
         "stop if zero", "stop if non-zero", "goto if zero", "goto if non-zero",
-        "divide and add to neuron input", "multiply and add to neuron input", "goto line",
+        "divide and add to neuron input", "multiply and add to neuron input", "goto",
         "stop if <", "stop if >", "stop if <=", "stop if >=",
         "set reward threshold", "set reward rate", "set reward chemical",
         "set punishment threshold", "set punishment rate", "set punishment chemical",
