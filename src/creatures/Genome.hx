@@ -166,7 +166,15 @@ class Genome {
 
     /** Remembers the genome as it is now; call it before a change so that the change can be undone. */
     public function checkpoint() : Void {
-        _undo.push(copyOf(_bytes));
+        recordUndo(copyOf(_bytes));
+    }
+
+    /**
+     * Remembers a snapshot taken earlier (see toBytes) as the state to go back to. This lets a caller make a
+     * change first and only record it if the bytes really changed.
+     */
+    public function recordUndo(snapshot : Bytes) : Void {
+        _undo.push(snapshot);
 
         if(_undo.length > HistoryLimit) {
             _undo.shift();

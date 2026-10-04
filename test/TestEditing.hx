@@ -458,6 +458,21 @@ class TestEditing extends Test {
         Assert.isFalse(genome.canRedo());
     }
 
+    function testAnEditCanBeRecordedAfterItWasMade() {
+        if(genome == null) {
+            Assert.pass("No fixture");
+            return;
+        }
+
+        var before = genome.toBytes();
+        genome.genes[5].mutability = 10;
+        genome.recordUndo(before);
+
+        Assert.isTrue(genome.canUndo());
+        Assert.same([5], genome.undo());
+        Assert.equals(128, genome.refresh(5).mutability);
+    }
+
     function testANewEditClearsTheRedoHistory() {
         if(genome == null) {
             Assert.pass("No fixture");
