@@ -6,14 +6,14 @@ import haxe.io.Bytes;
 @:build(JsProp.all())
 class ReceptorGene extends BiochemistryGene {
 
-    var organId(get, never) : Int;
-    var tissueId(get, never) : Int;
-    var locusId(get, never) : Int;
-    var chemical(get, never) : Int;
-    var threshold(get, never) : Float;
-    var nominal(get, never) : Float;
-    var gain(get, never) : Float;
-    var effect(get, never) : Int;
+    public var organId(get, never) : Int;
+    public var tissueId(get, never) : Int;
+    public var locusId(get, never) : Int;
+    public var chemical(get, never) : Int;
+    public var threshold(get, never) : Float;
+    public var nominal(get, never) : Float;
+    public var gain(get, never) : Float;
+    public var effect(get, never) : Int;
 
     /** Effect flags: the chemical lowers the signal instead of raising it / any signal gives the full gain. */
     public var reduces(get, never) : Bool;

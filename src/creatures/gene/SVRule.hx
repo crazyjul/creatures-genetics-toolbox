@@ -2,6 +2,8 @@ package creatures.gene;
 
 import haxe.io.Bytes;
 
+import creatures.Chemicals;
+
 /**
  * Decodes the 16-entry state-variable rules that lobe and tract genes carry.
  * Each entry is three codons: opcode, operand kind and array index/value.
@@ -128,7 +130,7 @@ class SVRule {
         return switch(operand) {
             case 1 | 2 | 3 | 4: name + "[" + index + "]";
             case 6 | 8: name + " " + index + "]";
-            case 7: name + "[" + index + "]";
+            case 7: name + " " + Chemicals.label(index);
             case 15: name + " " + index;
             case 11 | 12 | 13 | 14:
                 var value = Math.min(1.0, index / FloatDivisor);
