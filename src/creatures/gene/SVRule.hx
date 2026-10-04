@@ -58,7 +58,18 @@ class SVRule {
             var raw = bytes.get(at + 2);
             var index = operand >= 1 && operand <= 4 ? raw % 8 : raw;
 
-            entries.push({ opCode : op, operand : operand, index : index, text : describe(op, operand, index) });
+            var operandText = takesNoOperand(op) ? "" : describeOperand(op, operand, index);
+
+            entries.push({
+                opCode : op,
+                operand : operand,
+                index : index,
+                text : operandText == "" ? OpCodeNames[op] : OpCodeNames[op] + " " + operandText,
+                opName : OpCodeNames[op],
+                operandText : operandText,
+                category : categoryOf(op),
+                operandKind : takesNoOperand(op) ? "other" : operandKindOf(operand)
+            });
 
             if(op == 0) {
                 break;
@@ -68,18 +79,51 @@ class SVRule {
         return entries;
     }
 
-    static function describe(op : Int, operand : Int, index : Int) : String {
-        var name = OpCodeNames[op];
-
-        if(takesNoOperand(op)) {
-            return name;
+    static function categoryOf(op : Int) : String {
+        if(op == 0 || (op >= 4 && op <= 15) || (op >= 46 && op <= 49) || (op >= 52 && op <= 56) || op == 67 || op == 68) {
+            return "flow";
         }
 
-        return name + " " + describeOperand(operand, index);
+        if(op == 1 || op == 2 || op == 3 || op == 34 || op == 35 || op == 45 || (op >= 63 && op <= 66)) {
+            return "memory";
+        }
+
+        if((op >= 16 && op <= 29) || op == 32 || op == 33) {
+            return "math";
+        }
+
+        if(op == 43 || op == 44 || (op >= 57 && op <= 62)) {
+            return "learning";
+        }
+
+        if(op == 31 || (op >= 36 && op <= 42) || op == 50 || op == 51) {
+            return "neuron";
+        }
+
+        return "other";
     }
 
-    static function describeOperand(operand : Int, index : Int) : String {
+    static function operandKindOf(operand : Int) : String {
+        return switch(operand) {
+            case 0: "accumulator";
+            case 1 | 2 | 3 | 4: "variable";
+            case 6 | 7 | 8: "chemical";
+            case 11 | 12 | 13 | 14 | 15: "number";
+            default: "other";
+        }
+    }
+
+    /** Jumps take a line number, written as "line N" rather than as a raw value. */
+    static function isJump(op : Int) : Bool {
+        return op == 48 || op == 49 || op == 52 || op == 67 || op == 68;
+    }
+
+    static function describeOperand(op : Int, operand : Int, index : Int) : String {
         var name = OperandNames[operand];
+
+        if(isJump(op) && operand == 15) {
+            return "line " + index;
+        }
 
         return switch(operand) {
             case 1 | 2 | 3 | 4: name + "[" + index + "]";

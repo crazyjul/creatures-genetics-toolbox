@@ -171,6 +171,51 @@ class TestBrainGenes extends Test {
         }
     }
 
+    function testSVRuleEntriesAreSplitAndCategorised() {
+        if(genome == null) {
+            Assert.pass("No fixture");
+            return;
+        }
+
+        var categories = ["flow", "memory", "math", "neuron", "learning", "other"];
+        var kinds = ["variable", "chemical", "number", "accumulator", "other"];
+        var seen = new Map<String, Bool>();
+
+        for(gene in lobes.map(function(l) return cast(l, creatures.gene.Gene)).concat(tracts.map(function(t) return cast(t, creatures.gene.Gene)))) {
+            var rules : Array<Array<creatures.gene.SVRuleEntry>> = Std.isOfType(gene, LobeGene)
+                ? [cast(gene, LobeGene).initRule, cast(gene, LobeGene).updateRule]
+                : [cast(gene, TractGene).initRule, cast(gene, TractGene).updateRule];
+
+            for(rule in rules) {
+                for(entry in rule) {
+                    Assert.contains(entry.category, categories);
+                    Assert.contains(entry.operandKind, kinds);
+                    Assert.equals(entry.operandText == "" ? entry.opName : entry.opName + " " + entry.operandText, entry.text);
+                    seen[entry.category] = true;
+                }
+            }
+        }
+
+        // The sample brain uses rules of several kinds.
+        Assert.isTrue(seen.exists("flow"));
+        Assert.isTrue(seen.exists("memory"));
+        Assert.isTrue(seen.exists("math"));
+    }
+
+    function testSVRuleOperandsAreSplit() {
+        if(genome == null) {
+            Assert.pass("No fixture");
+            return;
+        }
+
+        // The combination lobe's update rule starts "set tend rate value 0.815".
+        var first = lobe("comb").updateRule[0];
+        Assert.equals("set tend rate", first.opName);
+        Assert.equals("value 0.815", first.operandText);
+        Assert.equals("math", first.category);
+        Assert.equals("number", first.operandKind);
+    }
+
     function testInstinct() {
         if(genome == null) {
             Assert.pass("No fixture");
