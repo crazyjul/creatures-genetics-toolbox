@@ -37,6 +37,13 @@ class PoseGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.byte("poseNumber", "Pose number", PoseNumberOffset),
+            Fields.text("poseString", "Pose string", PoseStringOffset, PoseStringLength, "one character per body part, then a spare one")
+        ];
+    }
+
     override function getName() : String {
         return 'Pose Gene';
     }

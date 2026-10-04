@@ -33,6 +33,21 @@ class EmitterGene extends BiochemistryGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.codon("organ", "Organ", OrganOffset, 0, Constants.EmitterOrganCount - 1, "0 brain, 1 creature, 2 organ"),
+            Fields.byte("tissue", "Tissue", TissueOffset),
+            Fields.byte("locus", "Locus", LocusOffset),
+            Fields.chemical("chemical", "Chemical", ChemicalOffset),
+            Fields.float("threshold", "Threshold", ThresholdOffset),
+            Fields.codon("tickInterval", "Tick interval", BioTickRateOffset, 1, 255, "emits once every n ticks"),
+            Fields.float("gain", "Gain", GainOffset),
+            Fields.bit("removes", "Clears the source", EffectOffset, 1),
+            Fields.bit("digital", "Digital", EffectOffset, 2, "gives the gain whatever the signal"),
+            Fields.bit("inverts", "Inverts the source", EffectOffset, 4)
+        ];
+    }
+
     override function getName() : String {
         return 'Emitter Gene';
     }

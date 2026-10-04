@@ -20,6 +20,10 @@ class GenusGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [Fields.codon("genus", "Genus", GenusOffset, 0, 3)];
+    }
+
     override function getName() : String {
         return 'Genus Gene (${genus}, ${mother}, ${father})';
     }

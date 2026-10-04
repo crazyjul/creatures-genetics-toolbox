@@ -45,6 +45,25 @@ class TractGene extends BrainGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.int16("updateTime", "Update time", UpdateTimeOffset, "0 means never updated"),
+            Fields.text("srcLobe", "Source lobe", SrcLobeOffset, 4),
+            Fields.int16("srcMin", "Source first neuron", SrcMinOffset),
+            Fields.int16("srcMax", "Source last neuron", SrcMaxOffset),
+            Fields.int16("srcDendrites", "Source dendrites per neuron", SrcDendritesOffset),
+            Fields.text("dstLobe", "Destination lobe", DstLobeOffset, 4),
+            Fields.int16("dstMin", "Destination first neuron", DstMinOffset),
+            Fields.int16("dstMax", "Destination last neuron", DstMaxOffset),
+            Fields.int16("dstDendrites", "Destination dendrites per neuron", DstDendritesOffset),
+            Fields.bool("migrates", "Dendrites migrate", MigratesOffset),
+            Fields.bool("randomDendriteCount", "Random dendrite count", RandomDendriteCountOffset),
+            Fields.codon("srcGrowthFactorVariable", "Source growth variable", SrcGrowthFactorOffset, 0, 7),
+            Fields.codon("dstGrowthFactorVariable", "Destination growth variable", DstGrowthFactorOffset, 0, 7),
+            Fields.bit("runInitRuleAlways", "Run the init rule every update", RunInitRuleAlwaysOffset, 1)
+        ];
+    }
+
     override function getName() : String {
         return 'Tract Gene (' + srcLobe + ' -> ' + dstLobe + ')';
     }

@@ -19,6 +19,13 @@ class PigmentbleedGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.byte("rotation", "Rotation", RotationOffset, "128 is neutral"),
+            Fields.byte("swap", "Swap", SwapOffset, "128 is neutral")
+        ];
+    }
+
     override function getName() : String {
         return 'Pigment bleed Gene';
     }

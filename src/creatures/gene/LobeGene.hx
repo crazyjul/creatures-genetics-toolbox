@@ -37,6 +37,22 @@ class LobeGene extends BrainGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.text("token", "Token", TokenOffset, 4, "four characters naming the lobe"),
+            Fields.int16("updateTime", "Update time", UpdateTimeOffset, "0 means never updated"),
+            Fields.int16("x", "Position x", XOffset),
+            Fields.int16("y", "Position y", YOffset),
+            Fields.byte("width", "Width", WidthOffset, "neurons across"),
+            Fields.byte("height", "Height", HeightOffset, "neurons down"),
+            Fields.byte("red", "Red", ColourOffset),
+            Fields.byte("green", "Green", ColourOffset + 1),
+            Fields.byte("blue", "Blue", ColourOffset + 2),
+            Fields.byte("tissueId", "Tissue id", TissueIdOffset, "255 means no tissue"),
+            Fields.bit("runInitRuleAlways", "Run the init rule every update", RunInitRuleAlwaysOffset, 1)
+        ];
+    }
+
     override function getName() : String {
         return 'Lobe Gene (' + token + ')';
     }

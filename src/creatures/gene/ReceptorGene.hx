@@ -32,6 +32,20 @@ class ReceptorGene extends BiochemistryGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.codon("organId", "Organ", OrganIdOffset, 0, 3, "0 brain, 1 creature, 2 organ, 3 reaction"),
+            Fields.byte("tissueId", "Tissue", TissueIdOffset),
+            Fields.byte("locusId", "Locus", LocusIdOffset),
+            Fields.chemical("chemical", "Chemical", ChemicalOffset),
+            Fields.float("threshold", "Threshold", ThresholdOffset),
+            Fields.float("nominal", "Nominal", NominalOffset),
+            Fields.float("gain", "Gain", GainOffset),
+            Fields.bit("reduces", "Reduces the signal", EffectOffset, 1, "otherwise the chemical raises it"),
+            Fields.bit("digital", "Digital", EffectOffset, 2, "any signal gives the full gain")
+        ];
+    }
+
     override function getName() : String {
         return 'Receptor Gene';
     }

@@ -25,6 +25,22 @@ class StimulusGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        var list = [
+            Fields.codon("stimulus", "Stimulus", StimulusOffset, 0, Constants.StimuliCount - 1),
+            Fields.float("nounStimulation", "Noun stimulation", NounStimulationOffset),
+            Fields.byte("verbToStimulate", "Verb to stimulate", VerbToStimulateOffset, "255 means none"),
+            Fields.byte("stimulusFlags", "Flags", StimulusFlagsOffset)
+        ];
+
+        for(i in 0...4) {
+            list.push(Fields.chemical("chemical" + i, "Chemical " + (i + 1), ChemicalsOffset + 2 * i, "0 means none"));
+            list.push(Fields.sfloat("adjustment" + i, "Adjustment " + (i + 1), ChemicalsOffset + 2 * i + 1));
+        }
+
+        return list;
+    }
+
     override function getName() : String {
         return 'Stimulus Gene';
     }
@@ -34,7 +50,7 @@ class StimulusGene extends CreatureGene {
     }
 
     function get_stimulus() : Int {
-        return getCodon(0, 0, Constants.StimuliCount - 1);
+        return getCodon(StimulusOffset, 0, Constants.StimuliCount - 1);
     }
 
     function get_nounStimulation(): Float {

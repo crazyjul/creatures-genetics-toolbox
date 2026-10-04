@@ -26,6 +26,21 @@ class InstinctGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        var list = [];
+
+        for(i in 0...InputCount) {
+            list.push(Fields.byte("lobe" + i, "Input " + (i + 1) + " lobe", InputsOffset + 2 * i, "tissue id + 1; 0 or 255 means unused"));
+            list.push(Fields.byte("neuron" + i, "Input " + (i + 1) + " neuron", InputsOffset + 2 * i + 1));
+        }
+
+        list.push(Fields.byte("action", "Action (verb script id)", ActionOffset));
+        list.push(Fields.byte("drive", "Reinforcing drive", DriveOffset));
+        list.push(Fields.sfloat("reinforcement", "Reinforcement", ReinforcementOffset));
+
+        return list;
+    }
+
     override function getName() : String {
         return 'Instinct Gene';
     }

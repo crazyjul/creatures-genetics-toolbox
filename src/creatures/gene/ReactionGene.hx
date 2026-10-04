@@ -26,6 +26,20 @@ class ReactionGene extends BiochemistryGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        var names = ["Reactant 1", "Reactant 2", "Product 1", "Product 2"];
+        var list = [];
+
+        for(i in 0...4) {
+            list.push(Fields.codon("proportion" + i, names[i] + " proportion", TermsOffset + 2 * i, 1, MaxProportion));
+            list.push(Fields.chemical("chemical" + i, names[i] + " chemical", TermsOffset + 2 * i + 1, "0 means none"));
+        }
+
+        list.push(Fields.float("slowness", "Slowness", RateOffset, "0 is the fastest reaction"));
+
+        return list;
+    }
+
     override function getName() : String {
         return 'Reaction Gene';
     }

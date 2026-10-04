@@ -21,6 +21,20 @@ class ExpressionGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        var list = [
+            Fields.codon("expressionId", "Expression", ExpressionOffset, 0, Constants.ExpressionCount - 1),
+            Fields.float("weight", "Weight", WeightOffset)
+        ];
+
+        for(i in 0...4) {
+            list.push(Fields.byte("drive" + i, "Drive " + (i + 1), DriveWeightsOffset + 2 * i));
+            list.push(Fields.sfloat("driveWeight" + i, "Drive " + (i + 1) + " weight", DriveWeightsOffset + 2 * i + 1));
+        }
+
+        return list;
+    }
+
     override function getName() : String {
         return 'Expression Gene';
     }

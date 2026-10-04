@@ -16,6 +16,13 @@ class InjectGene extends BiochemistryGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.chemical("chemical", "Chemical", ChemicalOffset),
+            Fields.float("initialConcentration", "Initial concentration", InitialConcentrationOffset)
+        ];
+    }
+
     override function getName() : String {
         return 'Inject Emitter Gene';
     }

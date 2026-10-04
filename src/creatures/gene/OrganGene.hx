@@ -28,6 +28,16 @@ class OrganGene extends Gene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.float("clockRate", "Clock rate", ClockRateOffset),
+            Fields.float("repairRate", "Repair rate", RepairRateOffset),
+            Fields.float("lifeForce", "Life force", LifeForceOffset),
+            Fields.float("initClock", "Initial clock", InitClockOffset),
+            Fields.float("zeroEnergyDamage", "Zero energy damage", ZeroEnergyDamageOffset)
+        ];
+    }
+
     override function getName() : String {
         return 'Organ Gene (${clockRate}, ${repairRate}, ${lifeForce}, ${initClock}, ${zeroEnergyDamage})';
     }

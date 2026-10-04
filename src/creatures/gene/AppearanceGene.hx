@@ -21,6 +21,14 @@ class AppearanceGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        return [
+            Fields.codon("bodyRegion", "Body region", BodyRegionOffset, 0, RegionCount - 1),
+            Fields.codon("bodyVariant", "Body variant", BodyVariantOffset, 0, VariantCount - 1),
+            Fields.codon("genusVariant", "Genus variant", GenusVariantOffset, 0, CreatureGeniCount - 1)
+        ];
+    }
+
     override function getName() : String {
         return 'Appearance Gene';
     }

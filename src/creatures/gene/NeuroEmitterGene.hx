@@ -35,6 +35,24 @@ class NeuroEmitterGene extends BiochemistryGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        var list = [];
+
+        for(i in 0...InputCount) {
+            list.push(Fields.byte("lobe" + i, "Neuron " + (i + 1) + " lobe", InputsOffset + 2 * i, "tissue id + 1; 255 means unused"));
+            list.push(Fields.byte("neuron" + i, "Neuron " + (i + 1), InputsOffset + 2 * i + 1));
+        }
+
+        list.push(Fields.float("bioTickRate", "Tick rate", BioTickRateOffset));
+
+        for(i in 0...EmissionCount) {
+            list.push(Fields.chemical("chemical" + i, "Chemical " + (i + 1), EmissionsOffset + 2 * i, "0 means none"));
+            list.push(Fields.float("amount" + i, "Amount " + (i + 1), EmissionsOffset + 2 * i + 1));
+        }
+
+        return list;
+    }
+
     override function getName() : String {
         return 'Neuro Emitter Gene';
     }

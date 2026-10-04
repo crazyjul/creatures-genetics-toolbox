@@ -20,6 +20,16 @@ class GaitGene extends CreatureGene {
         super(bytes, offset);
     }
 
+    override public function fields() : Array<GeneField> {
+        var list = [Fields.byte("gait", "Gait number", GaitOffset)];
+
+        for(i in 0...PoseCount) {
+            list.push(Fields.byte("pose" + i, "Pose " + (i + 1), PosesOffset + i, "0 means unused"));
+        }
+
+        return list;
+    }
+
     override function getName() : String {
         return 'Gait Gene';
     }
