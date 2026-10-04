@@ -2,70 +2,71 @@ package creatures.gene;
 
 import haxe.io.Bytes;
 
-
+/**
+ * A chemical reaction site: up to two reactants turning into up to two products, at a given rate.
+ * Layout (from the engine's Organ::InitFromGenome): for the two reactants and then the two products,
+ * a proportion (1 to 16) and a chemical (0 meaning none); then the rate.
+ */
 @:build(JsProp.all())
 class ReactionGene extends BiochemistryGene {
 
-    public var organ(get, never):Int;
-    public var tissue(get, never):Int;
-    public var locus(get, never):Int;
-    public var chemical(get, never):Int;
-    public var threshold(get, never):Float;
-    public var nominal(get, never):Float;
-    public var gain(get, never):Float;
-    public var effect(get, never):Int;
+    public var reactants(get, never):Array<ReactionTerm>;
+    public var products(get, never):Array<ReactionTerm>;
+    public var speed(get, never):Float;
+    public var halfLifeTicks(get, never):Float;
+    public var equation(get, never):String;
 
-    static inline var OrganOffset = Gene.FirstGeneByte;
-    static inline var TissueOffset = Gene.FirstGeneByte + 1;
-    static inline var LocusOffset = Gene.FirstGeneByte + 2;
-    static inline var ChemicalOffset = Gene.FirstGeneByte + 3;
-    static inline var ThresholdOffset = Gene.FirstGeneByte + 4;
-    static inline var NominalOffset = Gene.FirstGeneByte + 5;
-    static inline var GainOffset = Gene.FirstGeneByte + 6;
-    static inline var EffectOffset = Gene.FirstGeneByte + 7;
-
+    static inline var MaxProportion = 16;
+    static inline var TermsOffset = Gene.FirstGeneByte;
+    static inline var RateOffset = Gene.FirstGeneByte + 8;
 
     public function new(bytes : Bytes, offset : Int) {
         super(bytes, offset);
     }
 
     override function getName() : String {
-        return 'Reaction Emitter Gene';
+        return 'Reaction Gene';
     }
 
     override function getTypename() {
         return "Reaction";
     }
 
-    public function get_organ():Int {
-        return getCodon(OrganOffset, 0, Constants.EmitterOrganCount - 1);
+    /** The term at a position: 0 and 1 are the reactants, 2 and 3 the products. */
+    function term(position : Int) : ReactionTerm {
+        return {
+            proportion : getCodon(TermsOffset + 2 * position, 1, MaxProportion),
+            chemical : getByte(TermsOffset + 2 * position + 1)
+        };
     }
 
-    public function get_tissue():Int {
-        return getByte(TissueOffset);
+    function present(positions : Array<Int>) : Array<ReactionTerm> {
+        return [for(p in positions) term(p)].filter(function(t) return t.chemical != 0);
     }
 
-    public function get_locus():Int {
-        return getByte(LocusOffset);
+    public function get_reactants():Array<ReactionTerm> {
+        return present([0, 1]);
     }
 
-    public function get_chemical():Int {
-        return getCodon(ChemicalOffset, 0, Constants.ChemicalCount - 1);
+    public function get_products():Array<ReactionTerm> {
+        return present([2, 3]);
     }
 
-    public function get_threshold():Float {
-        return getFloat(ThresholdOffset);
+    /** 1 is the fastest reaction, 0 the slowest. */
+    public function get_speed():Float {
+        return 1.0 - getFloat(RateOffset);
     }
 
-    public function get_nominal():Float {
-        return return getFloat(NominalOffset);
+    /** Ticks for half of the available reactants to react, as the engine computes it. */
+    public function get_halfLifeTicks():Float {
+        return Math.pow(2.2, getFloat(RateOffset) * 32.0);
     }
 
-    public function get_gain():Float {
-        return getFloat(GainOffset);
+    function writeSide(terms : Array<ReactionTerm>) : String {
+        return terms.length == 0 ? "nothing" : terms.map(function(t) return t.proportion + " x chem " + t.chemical).join(" + ");
     }
 
-    public function get_effect():Int {
-        return getCodon(EffectOffset, 0, 255);
+    public function get_equation():String {
+        return writeSide(reactants) + " -> " + writeSide(products);
     }
 }

@@ -7,6 +7,7 @@ class TestMain {
         runner.addCase(new TestGenome());
         runner.addCase(new TestBrainGenes());
         runner.addCase(new TestOtherGenes());
+        runner.addCase(new TestBiochemistryGenes());
         Report.create(runner);
         runner.run();
     }

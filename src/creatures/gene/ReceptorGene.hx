@@ -15,6 +15,10 @@ class ReceptorGene extends BiochemistryGene {
     var gain(get, never) : Float;
     var effect(get, never) : Int;
 
+    /** Effect flags: the chemical lowers the signal instead of raising it / any signal gives the full gain. */
+    public var reduces(get, never) : Bool;
+    public var digital(get, never) : Bool;
+
     static inline var OrganIdOffset = Gene.FirstGeneByte;
     static inline var TissueIdOffset = Gene.FirstGeneByte + 1;
     static inline var LocusIdOffset = Gene.FirstGeneByte + 2;
@@ -62,6 +66,14 @@ class ReceptorGene extends BiochemistryGene {
 
     function get_effect() : Int {
         return getByte(EffectOffset);
+    }
+
+    function get_reduces() : Bool {
+        return (effect & 1) != 0;
+    }
+
+    function get_digital() : Bool {
+        return (effect & 2) != 0;
     }
 
     override function getTypename() {

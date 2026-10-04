@@ -15,6 +15,11 @@ class EmitterGene extends BiochemistryGene {
     public var gain(get, never):Float;
     public var effect(get, never):Int;
 
+    /** Effect flags: clear the source after emitting / output the gain whatever the signal / invert the source first. */
+    public var removes(get, never):Bool;
+    public var digital(get, never):Bool;
+    public var inverts(get, never):Bool;
+
     static inline var OrganOffset = Gene.FirstGeneByte;
     static inline var TissueOffset = Gene.FirstGeneByte + 1;
     static inline var LocusOffset = Gene.FirstGeneByte + 2;
@@ -30,6 +35,18 @@ class EmitterGene extends BiochemistryGene {
 
     override function getName() : String {
         return 'Emitter Gene';
+    }
+
+    public function get_removes():Bool {
+        return (effect & 1) != 0;
+    }
+
+    public function get_digital():Bool {
+        return (effect & 2) != 0;
+    }
+
+    public function get_inverts():Bool {
+        return (effect & 4) != 0;
     }
 
     override function getTypename() {

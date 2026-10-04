@@ -21,6 +21,13 @@ class HalfLifeGene extends BiochemistryGene {
         return "HalfLife";
     }
 
+    /** Ticks for a chemical's concentration to halve, as the engine computes it; 0 means it vanishes at once. */
+    public var halfLives(get, never) : Array<Float>;
+
+    function get_halfLives() : Array<Float> {
+        return [for(rate in decayRates) rate == 0 ? 0.0 : Math.pow(2.2, rate)];
+    }
+
     function get_decayRates():  Array<Float> {
         if(_decayRates == null) {
             _decayRates = [];
