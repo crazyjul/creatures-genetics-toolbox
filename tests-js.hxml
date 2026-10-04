@@ -1,0 +1,7 @@
+-cp src
+-cp test
+-lib jsprop
+-lib utest
+-lib hxnodejs
+-main TestMain
+-js bin/tests.js

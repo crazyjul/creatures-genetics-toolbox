@@ -32,6 +32,10 @@ class EmitterGene extends BiochemistryGene {
         return 'Emitter Gene';
     }
 
+    override function getTypename() {
+        return "Emitter";
+    }
+
     public function get_organ():Int {
         return getCodon(OrganOffset, 0, Constants.EmitterOrganCount - 1);
     }

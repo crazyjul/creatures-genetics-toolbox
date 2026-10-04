@@ -117,6 +117,41 @@ class Gene {
         return _bytes.get(_offset + local_offset);
     }
 
+    /** Two byte big-endian integer, as stored in genes. */
+    function getInt(local_offset : Int) : Int {
+        return (getByte(local_offset) << 8) | getByte(local_offset + 1);
+    }
+
+    /** Four character identifier (lobe names and so on). Read as raw bytes, genes are not text. */
+    function getToken(local_offset : Int) : String {
+        var token = "";
+
+        for(i in 0...4) {
+            token += String.fromCharCode(getByte(local_offset + i));
+        }
+
+        return token;
+    }
+
+    /** Reads raw bytes as characters. Not getString, which decodes UTF-8 and throws on binary data. */
+    function getRawString(local_offset : Int, length : Int) : String {
+        var result = "";
+
+        for(i in 0...length) {
+            result += String.fromCharCode(getByte(local_offset + i));
+        }
+
+        return result;
+    }
+
+    function getBool(local_offset : Int) : Bool {
+        return getByte(local_offset) != 0;
+    }
+
+    function getSVRule(local_offset : Int) : Array<SVRuleEntry> {
+        return SVRule.read(_bytes, _offset + local_offset);
+    }
+
     function getFloat(local_offset : Int) : Float {
         return _bytes.get(_offset + local_offset) / 255;
     }
