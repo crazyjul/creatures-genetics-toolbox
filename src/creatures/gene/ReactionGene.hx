@@ -2,6 +2,8 @@ package creatures.gene;
 
 import haxe.io.Bytes;
 
+import creatures.Chemicals;
+
 /**
  * A chemical reaction site: up to two reactants turning into up to two products, at a given rate.
  * Layout (from the engine's Organ::InitFromGenome): for the two reactants and then the two products,
@@ -63,7 +65,11 @@ class ReactionGene extends BiochemistryGene {
     }
 
     function writeSide(terms : Array<ReactionTerm>) : String {
-        return terms.length == 0 ? "nothing" : terms.map(function(t) return t.proportion + " x chem " + t.chemical).join(" + ");
+        return terms.length == 0 ? "nothing" : terms.map(function(t) {
+            var name = Chemicals.isKnown(t.chemical) ? Chemicals.name(t.chemical) : "chem " + t.chemical;
+
+            return t.proportion + " x " + name;
+        }).join(" + ");
     }
 
     public function get_equation():String {

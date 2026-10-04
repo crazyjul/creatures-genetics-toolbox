@@ -42,7 +42,7 @@ class TestBiochemistryGenes extends Test {
             return;
         }
 
-        // "protein to amino acid": 1 x chemical 12 -> 4 x chemical 13
+        // "protein to amino acid": 1 x protein (12) -> 4 x amino acid (13)
         var r = reaction(24);
         Assert.notNull(r);
         Assert.equals(1, r.reactants.length);
@@ -51,7 +51,7 @@ class TestBiochemistryGenes extends Test {
         Assert.equals(1, r.products.length);
         Assert.equals(13, r.products[0].chemical);
         Assert.equals(4, r.products[0].proportion);
-        Assert.equals("1 x chem 12 -> 4 x chem 13", r.equation);
+        Assert.equals("1 x Protein -> 4 x Amino acid", r.equation);
         Assert.equals("Reaction", r.typename);
     }
 
