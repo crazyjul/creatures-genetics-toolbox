@@ -9,6 +9,7 @@ class TestMain {
         runner.addCase(new TestOtherGenes());
         runner.addCase(new TestBiochemistryGenes());
         runner.addCase(new TestChemicals());
+        runner.addCase(new TestChemicalUsage());
         Report.create(runner);
         runner.run();
     }
